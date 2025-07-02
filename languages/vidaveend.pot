@@ -1,0 +1,323 @@
+# Copyright (C) 2025 VeendHQ
+# This file is distributed under the GNU General Public License v3.0.
+msgid ""
+msgstr ""
+"Project-Id-Version: Vida by VeendHQ 0.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vidaveend\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2025-07-02T20:45:37+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: vidaveend\n"
+
+#. Plugin Name of the plugin
+#: vida.php
+msgid "Vida by VeendHQ"
+msgstr ""
+
+#. Plugin URI of the plugin
+#. Author URI of the plugin
+#: vida.php
+msgid "https://veendhq.com/"
+msgstr ""
+
+#. Description of the plugin
+#: vida.php
+msgid "This plugin is the official plugin of vida by vendhq."
+msgstr ""
+
+#. Author of the plugin
+#: vida.php
+msgid "VeendHQ"
+msgstr ""
+
+#: inc/block/class-vida-block-support.php:157
+msgid "Visa"
+msgstr ""
+
+#: inc/block/class-vida-block-support.php:161
+msgid "American Express"
+msgstr ""
+
+#: inc/block/class-vida-block-support.php:165
+msgid "Mastercard"
+msgstr ""
+
+#: inc/block/class-vida-block-support.php:172
+msgctxt "Name of credit card"
+msgid "Discover"
+msgstr ""
+
+#: inc/block/class-vida-block-support.php:176
+msgid "JCB"
+msgstr ""
+
+#: inc/block/class-vida-block-support.php:180
+msgid "Diners"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:98
+msgid "Individuals who need quick access to cash can browse through a list of trusted lenders, and select the lender that best fits their needs. Individuals who also need buy now pay later options from merchants can enjoy flexible options and gain insights into their financial health."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:148
+msgid "Webhook Instruction"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:152
+msgid "Please add this webhook URL and paste on the webhook section on your dashboard"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:173
+msgid "Enable/Disable"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:174
+msgid "Enable Vida"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:176
+msgid "Enable Vida as a payment option on the checkout page"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:181
+msgid "Payment method title"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:183
+#: inc/class-vida-payment-gateway.php:189
+msgid "Optional"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:187
+msgid "Payment method description"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:193
+msgid "Test Client ID"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:195
+msgid "Required! Enter your Vida test client_id here"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:199
+msgid "Test Client Secret"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:201
+msgid "Required! Enter your Vida test client secret here"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:205
+msgid "Live Client Id"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:207
+msgid "Required! Enter your Vida live client id here"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:211
+msgid "Live Client Secret"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:213
+msgid "Required! Enter your Vida live client Secret here"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:217
+msgid "Autocomplete Order After Payment"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:218
+msgid "Autocomplete Order"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:221
+msgid "If enabled, the order will be marked as complete after successful payment"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:226
+msgid "Mode"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:227
+msgid "Live mode"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:229
+msgid "Check this box if you're using your live keys."
+msgstr ""
+
+#. translators: %s: url
+#: inc/class-vida-payment-gateway.php:294
+#, php-format
+msgid "For Vida on appear on checkout. Please <a href=\"%s\">set your Vida Oauth Credentials are needed</a> to be able to accept payments."
+msgstr ""
+
+#. translators: %s: shop cart url
+#: inc/class-vida-payment-gateway.php:330
+#, php-format
+msgid "Sorry, your session has expired. <a href=\"%s\" class=\"wc-backward\">Return to shop</a>"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:346
+#: inc/class-vida-payment-gateway.php:443
+msgid "We were unable to process your order, please try again."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:444
+msgid "Attention: Customer session expired. "
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:445
+msgid "Customer should try again. order has status is now pending payment."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:474
+msgid "verifying the Payment of Vida..."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:484
+#: inc/class-vida-payment-gateway.php:770
+msgid "The customer clicked on the cancel button on Checkout."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:486
+#: inc/class-vida-payment-gateway.php:772
+msgid "Attention: Customer clicked on the cancel button on the payment gateway. We have updated the order to cancelled status. "
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:495
+#: inc/class-vida-payment-gateway.php:779
+msgid "Payment Attempt Failed. Please Try Again."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:496
+#: inc/class-vida-payment-gateway.php:780
+msgid "Customer Payment Attempt failed. Advise customer to try again with a different Payment Method"
+msgstr ""
+
+#. translators: %s: Reason
+#: inc/class-vida-payment-gateway.php:503
+#: inc/class-vida-payment-gateway.php:526
+#: inc/class-vida-payment-gateway.php:787
+#: inc/class-vida-payment-gateway.php:808
+#, php-format
+msgid "Reason: %s"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:505
+#: inc/class-vida-payment-gateway.php:789
+msgid "Reason: Unknown"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:517
+#: inc/class-vida-payment-gateway.php:799
+msgid "Payment Attempt Failed. Try Again"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:519
+#: inc/class-vida-payment-gateway.php:801
+msgid "Payment Failed "
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:529
+#: inc/class-vida-payment-gateway.php:811
+msgid "Reason: Non-Given"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:550
+#: inc/class-vida-payment-gateway.php:830
+msgid "The payment didn't return a valid response. It could have timed out or abandoned by the customer on Vida"
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:554
+msgid "Please, contact us for information regarding this order."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:555
+#: inc/class-vida-payment-gateway.php:832
+msgid "Attention: New order has been placed on hold because we could not get a definite response from the payment gateway. Kindly contact the Vida support team at developers@vidaveend.com to confirm the payment."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:556
+#: inc/class-vida-payment-gateway.php:833
+msgid "Payment Reference: "
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:575
+#: inc/class-vida-payment-gateway.php:845
+msgid "Attention: New order has been placed on hold because of incorrect payment amount or currency. Please, look into it."
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:576
+#: inc/class-vida-payment-gateway.php:846
+msgid "Amount paid: "
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:576
+#: inc/class-vida-payment-gateway.php:846
+msgid "Order amount: "
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:576
+#: inc/class-vida-payment-gateway.php:846
+msgid " Reference: "
+msgstr ""
+
+#: inc/class-vida-payment-gateway.php:760
+msgid "verifying the Payment on Vida..."
+msgstr ""
+
+#. Translators: %s Plugin name.
+#: inc/class-vida.php:150
+#: inc/views/html-admin-missing-woocommerce.php:15
+msgid "Vida"
+msgstr ""
+
+#. translators: $1. Minimum WooCommerce version. $2. Current WooCommerce version.
+#: inc/notices/class-vida-notices.php:31
+#, php-format
+msgid "Vida requires WooCommerce %1$s or greater to be installed and activated. kindly upgrade to a higher version of WooCommerce. WooCommerce version %2$s is not supported."
+msgstr ""
+
+#: inc/rest-api/class-vida-settings-rest-controller.php:74
+msgid "The go_live value provided is invalid. Please provide a yes or no."
+msgstr ""
+
+#: inc/rest-api/class-vida-settings-rest-controller.php:86
+msgid "The autocomplete_order value provided is invalid. Please provide a yes or no."
+msgstr ""
+
+#: inc/rest-api/class-vida-settings-rest-controller.php:98
+msgid "The enabled value provided is invalid. Please provide a yes or no."
+msgstr ""
+
+#: inc/rest-api/class-vida-settings-rest-controller.php:119
+#: inc/rest-api/class-vida-settings-rest-controller.php:137
+msgid "Your user is not permitted to access this resource."
+msgstr ""
+
+#. Translators: %s Plugin name.
+#: inc/views/html-admin-missing-woocommerce.php:15
+#, php-format
+msgid "%s requires WooCommerce to be installed and activated in order to serve updates."
+msgstr ""
+
+#: inc/views/html-admin-missing-woocommerce.php:25
+msgid "Activate WooCommerce"
+msgstr ""
+
+#: inc/views/html-admin-missing-woocommerce.php:28
+#: inc/views/html-admin-missing-woocommerce.php:42
+msgid "Deactivate Vida"
+msgstr ""
+
+#: inc/views/html-admin-missing-woocommerce.php:40
+msgid "Install WooCommerce"
+msgstr ""

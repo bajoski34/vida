@@ -1,0 +1,7 @@
+.env
+node_modules/
+vendor/
+*.zip
+index.html
+*-lock.yaml
+build/

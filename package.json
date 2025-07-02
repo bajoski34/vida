@@ -1,0 +1,105 @@
+{
+  "name": "vida",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "rspack dev",
+    "build:rspack": "rspack build",
+    "postinstall": "composer install",
+    "prebuild": "pnpm install && composer install",
+    "build": " pnpm run preuglify && pnpm run uglify && composer run makepot && pnpm run build:rspack && pnpm run plugin-zip",
+    "build:webpack": "wp-scripts build",
+    "start": "pnpm run start:webpack",
+    "start:webpack": "rimraf build/* && wp-scripts start",
+    "preuglify": "rm -f $npm_package_config_assets_js_min",
+    "uglify": "for f in $npm_package_config_assets_js_js; do file=${f%.js}; node_modules/.bin/uglifyjs $f -c -m > $file.min.js; done",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "format": "wp-scripts format",
+    "plugin-zip": "wp-scripts plugin-zip",
+    "wp-env": "wp-env",
+    "prepare": "husky",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js"
+  },
+  "lint-staged": {
+    "*.js": [
+      "wp-scripts lint-js"
+    ],
+    "*.php": [
+      "composer run lint"
+    ],
+    "*.scss": [
+      "wp-scripts lint-style"
+    ]
+  },
+  "config": {
+    "wp_org_slug": "vidaveend",
+    "assets": {
+      "js": {
+        "min": "assets/js/*.min.js",
+        "js": "assets/js/*.js"
+      },
+      "styles": {
+        "css": "assets/css/*.css",
+        "sass": "assets/css/*.scss",
+        "cssfolder": "assets/css/"
+      }
+    }
+  },
+  "files": [
+    "assets",
+    "i18n",
+    "build",
+    "languages",
+    "inc",
+    "vida.php",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "changelog.txt",
+    "readme.txt"
+  ],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.12.1",
+  "devDependencies": {
+    "@automattic/color-studio": "^2.6.0",
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "@formatjs/icu-messageformat-parser": "^2.7.6",
+    "@rspack/cli": "^1.4.2",
+    "@rspack/core": "^1.4.2",
+    "@svgr/cli": "^8.1.0",
+    "@woocommerce/dependency-extraction-webpack-plugin": "^2.2.0",
+    "@woocommerce/eslint-plugin": "^2.2.0",
+    "@wordpress/env": "^9.8.0",
+    "@wordpress/prettier-config": "^3.13.0",
+    "@wordpress/scripts": "^27.7.0",
+    "babel-loader": "^9.1.3",
+    "classnames": "^2.5.1",
+    "cross-env": "^7.0.3",
+    "css-loader": "^7.1.2",
+    "dotenv": "^16.4.5",
+    "husky": "^9.0.11",
+    "jshint": "^2.13.6",
+    "mini-css-extract-plugin": "^2.9.2",
+    "process": "^0.11.10",
+    "rimraf": "^5.0.5",
+    "rspack": "^0.1.1",
+    "rspack-cli": "^0.2.0",
+    "sass": "^1.89.2",
+    "sass-loader": "^16.0.5",
+    "style-loader": "^4.0.0",
+    "uglify-js": "^3.17.4",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "wp-textdomain": "^1.0.1"
+  },
+  "dependencies": {
+    "@wordpress/html-entities": "^4.26.0",
+    "@wordpress/i18n": "^5.26.0"
+  }
+}

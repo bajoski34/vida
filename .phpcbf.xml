@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="right">
+    <description>WordPress Formatting Standards for Vida</description>
+
+    <!--
+    Prevent errors caused by WordPress Coding Standards not supporting PHP 8.0+.
+    See https://github.com/WordPress/WordPress-Coding-Standards/issues/2035
+    -->
+    <ini name="error_reporting" value="E_ALL &#38; ~E_DEPRECATED" />
+
+    <rule ref="Generic.Formatting.SpaceAfterCast.NoSpace"/>
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing.SpaceAfterBracket"/>
+    <rule ref="Squiz.Arrays.ArrayBracketSpacing.SpaceBeforeBracket"/>
+    <rule ref="Squiz.Classes.SelfMemberReference.SpaceBefore"/>
+    <rule ref="Squiz.Commenting.InlineComment.NoSpaceBefore"/>
+    <rule ref="Squiz.Strings.DoubleQuoteUsage.NotRequired"/>
+    <rule ref="Squiz.WhiteSpace.ControlStructureSpacing.NoLineAfterClose"/>
+    <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace.SpacingAfter"/><!-- ok -->
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing.SpacingAfter"/><!-- ok -->
+    <!--<rule ref="Generic.WhiteSpace.ScopeIndent.Incorrect"/>-->
+    <!--<rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace.SpacingBeforeClose"/>-->
+    <!--<rule ref="PEAR.Functions.FunctionCallSignature.SpaceAfterCloseBracket"/>-->
+    <rule ref="PSR2"/>
+</ruleset>
