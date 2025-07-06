@@ -143,16 +143,16 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 		?>
 		
 		<table class="form-table">
-			<tr valign="top">
+			<!-- <tr valign="top">
 				<th scope="row">
-					<label><?php esc_attr_e( 'Webhook Instruction', 'vidaveend' ); ?></label>
+					<label><?php //esc_attr_e( 'Webhook Instruction', 'vidaveend' ); ?></label>
 				</th>
 				<td class="forminp forminp-text">
 					<p class="description">
-						<?php esc_attr_e( 'Please add this webhook URL and paste on the webhook section on your dashboard', 'vidaveend' ); ?><strong style="color: blue"><pre><code><?php echo esc_url( WC()->api_request_url( 'Vida_Payment_Webhook' ) ); ?></code></pre></strong><a href="https://merchant.vida.com/merchant/settings" target="_blank">Merchant Account</a>
+						<?php //esc_attr_e( 'Please add this webhook URL and paste on the webhook section on your dashboard', 'vidaveend' ); ?><strong style="color: blue"><pre><code><?php //echo esc_url( WC()->api_request_url( 'Vida_Payment_Webhook' ) ); ?></code></pre></strong><a href="https://merchant.vida.com/merchant/settings" target="_blank">Merchant Account</a>
 					</p>
 				</td>
-			</tr>
+			</tr> -->
 			<?php
 				$this->generate_settings_html();
 			?>

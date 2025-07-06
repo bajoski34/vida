@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-02T20:45:37+00:00\n"
+"POT-Creation-Date: 2025-07-06T19:18:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vidaveend\n"
@@ -61,15 +61,7 @@ msgid "Diners"
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:98
-msgid "Individuals who need quick access to cash can browse through a list of trusted lenders, and select the lender that best fits their needs. Individuals who also need buy now pay later options from merchants can enjoy flexible options and gain insights into their financial health."
-msgstr ""
-
-#: inc/class-vida-payment-gateway.php:148
-msgid "Webhook Instruction"
-msgstr ""
-
-#: inc/class-vida-payment-gateway.php:152
-msgid "Please add this webhook URL and paste on the webhook section on your dashboard"
+msgid "A BNPL options for customer to lend to checkout and pay later (Only NGN available at the moment)."
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:173
@@ -165,118 +157,119 @@ msgstr ""
 msgid "Sorry, your session has expired. <a href=\"%s\" class=\"wc-backward\">Return to shop</a>"
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:346
-#: inc/class-vida-payment-gateway.php:443
+#: inc/class-vida-payment-gateway.php:360
+#: inc/class-vida-payment-gateway.php:458
 msgid "We were unable to process your order, please try again."
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:444
+#: inc/class-vida-payment-gateway.php:459
 msgid "Attention: Customer session expired. "
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:445
+#: inc/class-vida-payment-gateway.php:460
 msgid "Customer should try again. order has status is now pending payment."
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:474
+#: inc/class-vida-payment-gateway.php:489
 msgid "verifying the Payment of Vida..."
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:484
-#: inc/class-vida-payment-gateway.php:770
+#: inc/class-vida-payment-gateway.php:499
+#: inc/class-vida-payment-gateway.php:785
 msgid "The customer clicked on the cancel button on Checkout."
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:486
-#: inc/class-vida-payment-gateway.php:772
+#: inc/class-vida-payment-gateway.php:501
+#: inc/class-vida-payment-gateway.php:787
 msgid "Attention: Customer clicked on the cancel button on the payment gateway. We have updated the order to cancelled status. "
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:495
-#: inc/class-vida-payment-gateway.php:779
+#: inc/class-vida-payment-gateway.php:510
+#: inc/class-vida-payment-gateway.php:794
 msgid "Payment Attempt Failed. Please Try Again."
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:496
-#: inc/class-vida-payment-gateway.php:780
+#: inc/class-vida-payment-gateway.php:511
+#: inc/class-vida-payment-gateway.php:795
 msgid "Customer Payment Attempt failed. Advise customer to try again with a different Payment Method"
 msgstr ""
 
 #. translators: %s: Reason
-#: inc/class-vida-payment-gateway.php:503
-#: inc/class-vida-payment-gateway.php:526
-#: inc/class-vida-payment-gateway.php:787
-#: inc/class-vida-payment-gateway.php:808
+#: inc/class-vida-payment-gateway.php:518
+#: inc/class-vida-payment-gateway.php:541
+#: inc/class-vida-payment-gateway.php:802
+#: inc/class-vida-payment-gateway.php:823
 #, php-format
 msgid "Reason: %s"
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:505
-#: inc/class-vida-payment-gateway.php:789
+#: inc/class-vida-payment-gateway.php:520
+#: inc/class-vida-payment-gateway.php:804
 msgid "Reason: Unknown"
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:517
-#: inc/class-vida-payment-gateway.php:799
+#: inc/class-vida-payment-gateway.php:532
+#: inc/class-vida-payment-gateway.php:814
 msgid "Payment Attempt Failed. Try Again"
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:519
-#: inc/class-vida-payment-gateway.php:801
+#: inc/class-vida-payment-gateway.php:534
+#: inc/class-vida-payment-gateway.php:816
 msgid "Payment Failed "
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:529
-#: inc/class-vida-payment-gateway.php:811
+#: inc/class-vida-payment-gateway.php:544
+#: inc/class-vida-payment-gateway.php:826
 msgid "Reason: Non-Given"
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:550
-#: inc/class-vida-payment-gateway.php:830
+#: inc/class-vida-payment-gateway.php:565
+#: inc/class-vida-payment-gateway.php:845
 msgid "The payment didn't return a valid response. It could have timed out or abandoned by the customer on Vida"
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:554
+#: inc/class-vida-payment-gateway.php:569
 msgid "Please, contact us for information regarding this order."
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:555
-#: inc/class-vida-payment-gateway.php:832
+#: inc/class-vida-payment-gateway.php:570
+#: inc/class-vida-payment-gateway.php:847
 msgid "Attention: New order has been placed on hold because we could not get a definite response from the payment gateway. Kindly contact the Vida support team at developers@vidaveend.com to confirm the payment."
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:556
-#: inc/class-vida-payment-gateway.php:833
+#: inc/class-vida-payment-gateway.php:571
+#: inc/class-vida-payment-gateway.php:848
 msgid "Payment Reference: "
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:575
-#: inc/class-vida-payment-gateway.php:845
+#: inc/class-vida-payment-gateway.php:590
+#: inc/class-vida-payment-gateway.php:860
 msgid "Attention: New order has been placed on hold because of incorrect payment amount or currency. Please, look into it."
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:576
-#: inc/class-vida-payment-gateway.php:846
+#: inc/class-vida-payment-gateway.php:591
+#: inc/class-vida-payment-gateway.php:861
 msgid "Amount paid: "
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:576
-#: inc/class-vida-payment-gateway.php:846
+#: inc/class-vida-payment-gateway.php:591
+#: inc/class-vida-payment-gateway.php:861
 msgid "Order amount: "
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:576
-#: inc/class-vida-payment-gateway.php:846
+#: inc/class-vida-payment-gateway.php:591
+#: inc/class-vida-payment-gateway.php:861
 msgid " Reference: "
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:760
+#: inc/class-vida-payment-gateway.php:775
 msgid "verifying the Payment on Vida..."
 msgstr ""
 
 #. Translators: %s Plugin name.
 #: inc/class-vida.php:150
 #: inc/views/html-admin-missing-woocommerce.php:15
+#: assets/blocks/payment-method/index.js:34
 msgid "Vida"
 msgstr ""
 
@@ -320,4 +313,16 @@ msgstr ""
 
 #: inc/views/html-admin-missing-woocommerce.php:40
 msgid "Install WooCommerce"
+msgstr ""
+
+#: assets/blocks/payment-method/index.js:21
+msgid "You may be redirected to a secure page to complete your payment."
+msgstr ""
+
+#: assets/blocks/payment-method/index.js:40
+msgid "Proceed to Vida"
+msgstr ""
+
+#: assets/blocks/payment-method/index.js:46
+msgid "Payment via Vida"
 msgstr ""

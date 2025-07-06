@@ -40,6 +40,7 @@ jQuery( function ( $ ) {
                 clientSecret: client_secret,
                 redirectUri: redirect_uri,
                 environment,
+                target: 'tab'
             },
             "request": {
                 profile: phone_number,
@@ -53,4 +54,19 @@ jQuery( function ( $ ) {
 
     const vidaMerchant = new VidaMerchant(payload['setup']);
 	vidaMerchant.createPurchase(payload['request']);
+
+    window.addEventListener("message", event => {
+        // Verify the message origin.
+        if (event.origin !== "https://app.mycreditprofile.me" && 
+            event.origin !== "https://vida-dashboard-git-ft-agiletech-veendhq-engineering.vercel.app") {
+            return;
+        }
+        
+        if (event.data.type === "purchase" && event.data.status === "completed") {
+            console.log(event.data);
+            $.blockUI({message: '<p> confirming transaction ...</p>'});
+			redirectPost(redirect_uri + "?txref=" + tx_ref, response);
+        }
+    });
+
 } );
