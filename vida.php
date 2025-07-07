@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Vida by VeendHQ
  * Plugin URI: https://veendhq.com/
- * Description: This plugin is the official plugin of vida by vendhq.
+ * Description: This plugin is the official plugin of vida by Veendhq.
  * Version: 0.0.1
  * Author: VeendHQ
  * Author URI: https://veendhq.com/

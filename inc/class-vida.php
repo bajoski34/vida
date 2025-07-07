@@ -10,7 +10,7 @@ declare(strict_types=1);
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Main Class
+ * Main Class.
  *
  * @since 1.0.0
  */
@@ -30,7 +30,7 @@ class Vida {
 	public static ?Vida $instance = null;
 
 	/**
-	 * Vida Constructor
+	 * Vida Constructor.
 	 */
 	public function __construct() {
 		$this->define_constants();
@@ -71,7 +71,7 @@ class Vida {
 		$this->define( 'VIDA_DIR_PATH', plugin_dir_path( VIDA_PLUGIN_FILE ) );
 		$this->define( 'VIDA_MIN_WC_VER', '6.9.1' );
 		$this->define( 'VIDA_URL', trailingslashit( plugins_url( '/', VIDA_PLUGIN_FILE ) ) );
-		$this->define( 'VIDA_ALLOWED_WEBHOOK_IP_ADDRESS', '0.0.0.0'); //TODO: prevent Inbound request from anywhere.
+		$this->define( 'VIDA_ALLOWED_WEBHOOK_IP_ADDRESS', '99.80.58.253');
 		$this->define( 'VIDA_EPSILON', 0.01 );
 	}
 
@@ -84,7 +84,7 @@ class Vida {
 	private function init() {
 		$notices = new Vida_Notices();
 
-		// Check if WooCommerce is active.
+		// Check if WooCommerce is Active.
 		if ( ! class_exists( 'WooCommerce' ) ) {
 			add_action( 'admin_notices', array( $notices, 'woocommerce_not_installed' ) );
 			return;
@@ -108,10 +108,10 @@ class Vida {
 				// using admin_print_styles.
 				$image_url = plugin_dir_url( VIDA_PLUGIN_FILE ) . 'assets/img/vida-30x30.png';
 				echo '<style> .dashicons-vida {
-					background-image: url("' . esc_url( $image_url ) . '");
-					background-repeat: no-repeat;
-					background-position: center; 
-			}</style>';
+						background-image: url("' . esc_url( $image_url ) . '");
+						background-repeat: no-repeat;
+						background-position: center; 
+					}</style>';
 			}
 		);
 

@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-06T19:18:19+00:00\n"
+"POT-Creation-Date: 2025-07-07T10:48:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vidaveend\n"
@@ -27,7 +27,7 @@ msgstr ""
 
 #. Description of the plugin
 #: vida.php
-msgid "This plugin is the official plugin of vida by vendhq."
+msgid "This plugin is the official plugin of vida by Veendhq."
 msgstr ""
 
 #. Author of the plugin

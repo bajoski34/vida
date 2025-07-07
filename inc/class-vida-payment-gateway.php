@@ -465,8 +465,8 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 			}
 		}
 
-		if ( isset( $_POST['reference'] ) || isset( $_GET['reference'] ) ) {
-			$txn_ref  = urldecode( sanitize_text_field( wp_unslash( $_GET['reference'] ) ) ) ?? sanitize_text_field( wp_unslash( $_POST['reference'] ) );
+		if ( isset( $_POST['tx_ref'] ) || isset( $_GET['tx_ref'] ) ) {
+			$txn_ref  = urldecode( sanitize_text_field( wp_unslash( $_GET['tx_ref'] ) ) ) ?? sanitize_text_field( wp_unslash( $_POST['tx_ref'] ) );
 			$o        = explode( '_', sanitize_text_field( $txn_ref ) );
 			$order_id = intval( $o[1] );
 			$order    = wc_get_order( $order_id );
@@ -652,12 +652,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	 * Process Webhook notifications.
 	 */
 	public function vida_notification_handler() {
-		$public_key = $this->public_key;
-		$secret_key = $this->secret_key;
 		$logger     = $this->logger;
-		$sdk        = $this->sdk;
-
-		$merchant_secret_hash = hash_hmac( 'SHA512', $public_key, $secret_key );
 
 		if ( VIDA_ALLOWED_WEBHOOK_IP_ADDRESS !== $this->vida_get_client_ip() ) {
 			$this->logger->info( 'Faudulent Webhook Notification Attempt [Access Restricted]: ' . (string) $this->vida_get_client_ip() );
@@ -675,7 +670,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 		http_response_code( 200 );
 		$event = json_decode( $event );
 
-		if ( empty( $event->notify ) && empty( $event->data ) ) {
+		if ( empty( $event->reference ) ) {
 			$this->logger->info( 'Webhook: ' . wp_json_encode( $event ) );
 			wp_send_json(
 				array(
@@ -686,36 +681,24 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 			);
 		}
 
-		if ( 'test_assess' === $event->notify ) {
-			wp_send_json(
-				array(
-					'status'  => 'success',
-					'message' => 'Webhook Test Successful. handler is accessible',
-				),
-				WP_Http::OK
-			);
-		}
-
 		$this->logger->info( 'Webhook: ' . wp_json_encode( $event ) );
 
-		if ( 'transaction' === $event->notify ) {
+		if ( 'bnpl' === $event->service ) {
 			sleep( 2 );
 			// phpcs:ignore.
-			$event_type = $event->notifyType;
-			$event_data = $event->data;
 
 			// check if transaction reference starts with WOO on hpos enabled.
-			if ( substr( $event_data->reference, 0, 4 ) !== 'WOO_' ) {
+			if ( substr( $event->reference, 0, 4 ) !== 'WOO_' ) {
 				wp_send_json(
 					array(
 						'status'  => 'failed',
-						'message' => 'The transaction reference ' . $event_data->reference . ' is not a Vida WooCommerce Generated transaction',
+						'message' => 'The transaction reference ' . $event->reference . ' is not a Vida WooCommerce Generated transaction',
 					),
 					WP_Http::BAD_REQUEST
 				);
 			}
 
-			$txn_ref  = sanitize_text_field( $event_data->reference );
+			$txn_ref  = sanitize_text_field( $event->reference );
 			$o        = explode( '_', $txn_ref );
 			$order_id = intval( $o[1] );
 			$order    = wc_get_order( $order_id );
