@@ -1,0 +1,9 @@
+.wc-block-checkout__payment-method .wc-block-components-radio-control-accordion-option .wc-block-components-radio-control__label img.vida-logo-on-checkout {
+    height: 300px !important;
+    max-height: none !important;
+    padding: 0em;
+}
+
+img.vida-logo-on-checkout {
+    max-height: none !important;
+}

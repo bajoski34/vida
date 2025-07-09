@@ -29,12 +29,12 @@ const paymentMethod = {
 	label: (
 		<div style={{ display: 'flex', flexDirection: 'row', rowGap: '0em', alignItems: 'center'}}>
 			<img
+			className='vida-logo-on-checkout'
 			src={ `${VIDA_ASSETS}/img/vida.png` }
 			alt={ decodeEntities(
 				getBlocksConfiguration()?.title || __( 'Vida', 'vidaveend' )
 			) }
 			/>
-			<b><h4>Vida</h4></b>
 		</div>
 	),
 	placeOrderButtonLabel: __(

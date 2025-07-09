@@ -117,6 +117,15 @@ final class Vida_Block_Support extends AbstractPaymentMethodType {
 			$version,
 			true
 		);
+
+		wp_enqueue_style(
+			'wc-vida-blocks',
+			VIDA_URL. '/assets/css/vida.css',
+			[],
+			VIDA_VERSION,
+			false
+		);
+
 		wp_set_script_translations(
 			'wc-vida-blocks',
 			'vida'

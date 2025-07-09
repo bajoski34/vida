@@ -33,14 +33,13 @@ jQuery( function ( $ ) {
 
 	const processData = () => {
         const { client_id, client_secret, redirect_uri, environment, phone_number, items, amount, tx_ref } = vida_args;
-        console.log("current order items: ", items)
 		return {
 			"setup" : {
                 clientId: client_id,
                 clientSecret: client_secret,
-                redirectUri: redirect_uri,
+                redirectUri: redirect_uri + "&txref=" + tx_ref,
                 environment,
-                target: 'tab'
+                // target: 'tab'
             },
             "request": {
                 profile: phone_number,
@@ -55,9 +54,15 @@ jQuery( function ( $ ) {
     const vidaMerchant = new VidaMerchant(payload['setup']);
 	vidaMerchant.createPurchase(payload['request']);
 
+    const bnplCloseBtn = document.getElementById('closeVidaIframe');
+
+    bnplCloseBtn.addEventListener("click", event => {
+
+    });
+
     window.addEventListener("message", event => {
         // Verify the message origin.
-        if (event.origin !== "https://app.mycreditprofile.me" && 
+        if (event.origin !== "https://app.mycreditprofile.me" &&
             event.origin !== "https://vida-dashboard-git-ft-agiletech-veendhq-engineering.vercel.app") {
             return;
         }

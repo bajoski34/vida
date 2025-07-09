@@ -310,7 +310,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	}
 
 	/**
-	 * Loads (enqueue) static files (js & css) for the checkout page
+	 * Loads (enqueue) static files (js & css) for the checkout page.
 	 *
 	 * @return void
 	 */
@@ -483,7 +483,6 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 				);
 
 				$order->add_order_note( esc_html__( 'verifying the Payment of Vida...', 'vidaveend' ) );
-				
 				$response = wp_safe_remote_request( $this->base_url . '/bnplrequests/'.$txn_ref.'/status', $args );
 
 				if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
