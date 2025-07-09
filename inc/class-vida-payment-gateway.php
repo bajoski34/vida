@@ -442,9 +442,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function vida_verify_payment() {
-		$public_key = $this->public_key;
-		$secret_key = $this->secret_key;
-		$logger     = $this->logger;
+		$logger = $this->logger;
 
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) ) ) {
 			if ( isset( $_GET['order_id'] ) ) {
@@ -470,7 +468,6 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 			$o        = explode( '_', sanitize_text_field( $txn_ref ) );
 			$order_id = intval( $o[1] );
 			$order    = wc_get_order( $order_id );
-			$sec_key  = $this->get_secret_key();
 
 			// Communicate with Vida to confirm payment.
 			$max_attempts = 3;
@@ -481,19 +478,17 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 				$args = array(
 					'method'  => 'GET',
 					'headers' => array(
-						'Content-Type'  => 'application/json',
-						'Authorization' => 'Bearer ' . $sec_key,
+						'Content-Type'  => 'application/json'
 					),
 				);
 
 				$order->add_order_note( esc_html__( 'verifying the Payment of Vida...', 'vidaveend' ) );
-
+				
 				$response = wp_safe_remote_request( $this->base_url . '/bnplrequests/'.$txn_ref.'/status', $args );
 
 				if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
-					// Request successful.
-					$current_response                  = \json_decode( $response['body'] );
-					$is_cancelled_or_pending_on_vida = in_array( $current_response->data->status, array( 'cancelled', 'pending' ), true );
+					$current_response                = \json_decode( $response['body'] );
+					$is_cancelled_or_pending_on_vida = \in_array( $current_response->status, array( 'cancelled' ), true );
 					if ( isset( $_GET['status'] ) && 'cancelled' === $_GET['status'] && $is_cancelled_or_pending_on_vida ) {
 						if ( $order instanceof WC_Order ) {
 							$order->add_order_note( esc_html__( 'The customer clicked on the cancel button on Checkout.', 'vidaveend' ) );
@@ -501,52 +496,74 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 							$admin_note = esc_html__( 'Attention: Customer clicked on the cancel button on the payment gateway. We have updated the order to cancelled status. ', 'vidaveend' ) . '<br>';
 							$order->add_order_note( $admin_note );
 						}
+
 						header( 'Location: ' . wc_get_cart_url() );
 						die();
 					} else {
-						if ( 'pending' === $current_response->data->status ) {
+						if ( 'initiated' === $current_response->status ) {
 
 							if ( $order instanceof WC_Order ) {
-								$order->add_order_note( esc_html__( 'Payment Attempt Failed. Please Try Again.', 'vidaveend' ) );
-								$admin_note = esc_html__( 'Customer Payment Attempt failed. Advise customer to try again with a different Payment Method', 'vidaveend' ) . '<br>';
-								if ( count( $current_response->log->history ) !== 0 ) {
-									$last_item_in_history = $current_response->log->history[ count( $current_response->log->history ) - 1 ];
-									$message              = json_decode( $last_item_in_history->message, true );
-									$this->logger->error( 'Failed Customer Attempt Explanation for ' . $txn_ref . ':' . wp_json_encode( $message ) );
-									$reason = $message['error']['explanation'] ?? $message['errors'][0]['message'] ?? 'Unknown';
-									/* translators: %s: Reason */
-									$admin_note .= sprintf( __( 'Reason: %s', 'vidaveend' ), $reason );
-								} else {
-									$admin_note .= esc_html__( 'Reason: Unknown', 'vidaveend' );
-								}
-
+								$order->add_order_note( esc_html__( 'Customer Initiated a BNPL transaction but is yet to complete the transaction.', 'vidaveend' ) );
+								$admin_note = esc_html__( 'Customer Attempt failed. Status is still pending', 'vidaveend' ) . '<br>';
 								$order->add_order_note( $admin_note );
 							}
 							header( 'Location: ' . wc_get_checkout_url() );
 							die();
 						}
 
-						if ( 'failed' === $current_response->data->status ) {
+						if ( 'pending' === $current_response->status ) {
+
+							if ( $order instanceof WC_Order ) {
+								$order->add_order_note( esc_html__( 'Customer Attempt Failed. Status is still pending.', 'vidaveend' ) );
+								$admin_note = esc_html__( 'Customer Attempt failed. Status is still pending', 'vidaveend' ) . '<br>';
+								$order->add_order_note( $admin_note );
+							}
+							header( 'Location: ' . wc_get_checkout_url() );
+							die();
+						}
+
+						if ( 'claimed' === $current_response->status ) {
+
+							if ( $order instanceof WC_Order ) {
+								$order->add_order_note( esc_html__( 'The customer has claimed the BNPL offer and has agreed to the terms.', 'vidaveend' ) );
+								$admin_note = esc_html__( 'The customer has claimed the BNPL offer and has agreed to the terms.', 'vidaveend' ) . '<br>';
+								$order->add_order_note( $admin_note );
+							}
+							// header( 'Location: ' . wc_get_checkout_url() );
+							// die();
+						}
+
+						if ( 'settled-merchant' === $current_response->status ) {
+
+							if ( $order instanceof WC_Order ) {
+								$order->add_order_note( esc_html__( 'Funds have been settled with you.', 'vidaveend' ) );
+								$admin_note = esc_html__( 'Funds have been settled with you.', 'vidaveend' ) . '<br>';
+								$order->add_order_note( $admin_note );
+							}
+							header( 'Location: ' . wc_get_checkout_url() );
+							die();
+						}
+
+						if ( 'failed' === $current_response->status ) {
 
 							if ( $order instanceof WC_Order ) {
 								$order->add_order_note( esc_html__( 'Payment Attempt Failed. Try Again', 'vidaveend' ) );
 								$order->update_status( 'failed' );
 								$admin_note = esc_html__( 'Payment Failed ', 'vidaveend' ) . '<br>';
-								if ( count( $current_response->log->history ) !== 0 ) {
-									$last_item_in_history = $current_response->log->history[ count( $current_response->log->history ) - 1 ];
-									$message              = json_decode( $last_item_in_history->message, true );
-									$this->logger->error( 'Failed Customer Attempt Explanation for ' . $txn_ref . ':' . wp_json_encode( $message ) );
-									$reason = $message['error']['explanation'] ?? $message['errors'][0]['message'] ?? 'Non-Given';
-									/* translators: %s: Reason */
-									$admin_note .= sprintf( __( 'Reason: %s', 'vidaveend' ), $reason );
-
-								} else {
-									$admin_note .= esc_html__( 'Reason: Non-Given', 'vidaveend' );
-								}
+								$this->logger->error( 'Failed Customer Attempt Explanation for ' . $txn_ref );
+								$admin_note .= esc_html__( 'Reason: Non-Given', 'vidaveend' );
 								$order->add_order_note( $admin_note );
 							}
 							header( 'Location: ' . wc_get_checkout_url() );
 							die();
+						}
+
+						if ( 'completed' === $current_response->status ) {
+							if ( $order instanceof WC_Order ) {
+								$order->add_order_note( esc_html__( 'The BNPL transaction has been successfully completed, with all payments made.', 'vidaveend' ) );
+								$admin_note = esc_html__( 'The BNPL transaction has been successfully completed, with all payments made.', 'vidaveend' ) . '<br>';
+								$order->add_order_note( $admin_note );
+							}
 						}
 
 						$success = true;
@@ -580,30 +597,16 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 				// Proceed with setting the payment on hold.
 				$response = json_decode( $response['body'] );
 				$this->logger->info( wp_json_encode( $response ) );
-				if ( (bool) $response->data->status ) {
-					$amount = (float) $response->data->requested_amount;
-					if ( $response->data->currency !== $order->get_currency() || ! $this->amounts_equal( $amount, $order->get_total() ) ) {
-						$order->update_status( 'on-hold' );
-						$customer_note  = 'Thank you for your order.<br>';
-						$customer_note .= 'Your payment successfully went through, but we have to put your order <strong>on-hold</strong> ';
-						$customer_note .= 'because the we couldn\t verify your order. Please, contact us for information regarding this order.';
-						$admin_note     = esc_html__( 'Attention: New order has been placed on hold because of incorrect payment amount or currency. Please, look into it.', 'vidaveend' ) . '<br>';
-						$admin_note    .= esc_html__( 'Amount paid: ', 'vidaveend' ) . $response->data->currency . ' ' . $amount . ' <br>' . esc_html__( 'Order amount: ', 'vidaveend' ) . $order->get_currency() . ' ' . $order->get_total() . ' <br>' . esc_html__( ' Reference: ', 'vidaveend' ) . $response->data->reference;
-						$order->add_order_note( $customer_note, 1 );
-						$order->add_order_note( $admin_note );
-					} else {
-						$order->payment_complete( $order->get_id() );
-						if ( 'yes' === $this->auto_complete_order ) {
-							$order->update_status( 'completed' );
-						}
-						$order->add_order_note( 'Payment was successful on Vida' );
-						$order->add_order_note( 'Vida  reference: ' . $txn_ref );
-
-						$customer_note  = 'Thank you for your order.<br>';
-						$customer_note .= 'Your payment was successful, we are now <strong>processing</strong> your order.';
-						$order->add_order_note( $customer_note, 1 );
-					}
+				$order->payment_complete( $order->get_id() );
+				if ( 'yes' === $this->auto_complete_order ) {
+					$order->update_status( 'completed' );
 				}
+				$order->add_order_note( 'Payment was successful on Vida' );
+				$order->add_order_note( 'Vida  reference: ' . $txn_ref );
+
+				$customer_note  = 'Thank you for your order.<br>';
+				$customer_note .= 'Your payment was successful, we are now <strong>processing</strong> your order.';
+				$order->add_order_note( $customer_note, 1 );
 			}
 			wc_add_notice( $customer_note, 'notice' );
 			WC()->cart->empty_cart();

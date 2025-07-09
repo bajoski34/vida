@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-07-07T10:48:27+00:00\n"
+"POT-Creation-Date: 2025-07-09T07:39:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vidaveend\n"
@@ -175,56 +175,56 @@ msgid "verifying the Payment of Vida..."
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:499
-#: inc/class-vida-payment-gateway.php:785
+#: inc/class-vida-payment-gateway.php:768
 msgid "The customer clicked on the cancel button on Checkout."
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:501
-#: inc/class-vida-payment-gateway.php:787
+#: inc/class-vida-payment-gateway.php:770
 msgid "Attention: Customer clicked on the cancel button on the payment gateway. We have updated the order to cancelled status. "
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:510
-#: inc/class-vida-payment-gateway.php:794
+#: inc/class-vida-payment-gateway.php:777
 msgid "Payment Attempt Failed. Please Try Again."
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:511
-#: inc/class-vida-payment-gateway.php:795
+#: inc/class-vida-payment-gateway.php:778
 msgid "Customer Payment Attempt failed. Advise customer to try again with a different Payment Method"
 msgstr ""
 
 #. translators: %s: Reason
 #: inc/class-vida-payment-gateway.php:518
 #: inc/class-vida-payment-gateway.php:541
-#: inc/class-vida-payment-gateway.php:802
-#: inc/class-vida-payment-gateway.php:823
+#: inc/class-vida-payment-gateway.php:785
+#: inc/class-vida-payment-gateway.php:806
 #, php-format
 msgid "Reason: %s"
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:520
-#: inc/class-vida-payment-gateway.php:804
+#: inc/class-vida-payment-gateway.php:787
 msgid "Reason: Unknown"
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:532
-#: inc/class-vida-payment-gateway.php:814
+#: inc/class-vida-payment-gateway.php:797
 msgid "Payment Attempt Failed. Try Again"
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:534
-#: inc/class-vida-payment-gateway.php:816
+#: inc/class-vida-payment-gateway.php:799
 msgid "Payment Failed "
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:544
-#: inc/class-vida-payment-gateway.php:826
+#: inc/class-vida-payment-gateway.php:809
 msgid "Reason: Non-Given"
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:565
-#: inc/class-vida-payment-gateway.php:845
+#: inc/class-vida-payment-gateway.php:828
 msgid "The payment didn't return a valid response. It could have timed out or abandoned by the customer on Vida"
 msgstr ""
 
@@ -233,36 +233,36 @@ msgid "Please, contact us for information regarding this order."
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:570
-#: inc/class-vida-payment-gateway.php:847
+#: inc/class-vida-payment-gateway.php:830
 msgid "Attention: New order has been placed on hold because we could not get a definite response from the payment gateway. Kindly contact the Vida support team at developers@vidaveend.com to confirm the payment."
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:571
-#: inc/class-vida-payment-gateway.php:848
+#: inc/class-vida-payment-gateway.php:831
 msgid "Payment Reference: "
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:590
-#: inc/class-vida-payment-gateway.php:860
+#: inc/class-vida-payment-gateway.php:843
 msgid "Attention: New order has been placed on hold because of incorrect payment amount or currency. Please, look into it."
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:591
-#: inc/class-vida-payment-gateway.php:861
+#: inc/class-vida-payment-gateway.php:844
 msgid "Amount paid: "
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:591
-#: inc/class-vida-payment-gateway.php:861
+#: inc/class-vida-payment-gateway.php:844
 msgid "Order amount: "
 msgstr ""
 
 #: inc/class-vida-payment-gateway.php:591
-#: inc/class-vida-payment-gateway.php:861
+#: inc/class-vida-payment-gateway.php:844
 msgid " Reference: "
 msgstr ""
 
-#: inc/class-vida-payment-gateway.php:775
+#: inc/class-vida-payment-gateway.php:758
 msgid "verifying the Payment on Vida..."
 msgstr ""
 
