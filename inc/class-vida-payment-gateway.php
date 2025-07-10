@@ -23,20 +23,20 @@ require_once __DIR__ . '/util/class-vida-logger.php';
 class Vida_Payment_Gateway extends WC_Payment_Gateway {
 
 	/**
-	 * Base url
+	 * Base url.
 	 *
 	 * @var string the api base url.
 	 */
 	protected string $base_url;
 
 	/**
-	 * Public Key
+	 * Public Key.
 	 *
 	 * @var string the client ID.
 	 */
 	protected string $client_id;
 	/**
-	 * Secret Key
+	 * Secret Key.
 	 *
 	 * @var string the client Secret.
 	 */

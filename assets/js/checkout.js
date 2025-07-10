@@ -37,9 +37,9 @@ jQuery( function ( $ ) {
 			"setup" : {
                 clientId: client_id,
                 clientSecret: client_secret,
-                redirectUri: redirect_uri + "&txref=" + tx_ref,
+                redirectUri: redirect_uri,
                 environment,
-                // target: 'tab'
+                target: 'tab'
             },
             "request": {
                 profile: phone_number,
