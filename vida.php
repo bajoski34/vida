@@ -39,8 +39,7 @@ if ( ! defined( 'VIDA_PLUGIN_FILE' ) ) {
  * @return array Existing links with our settings link added
  */
 function vida_plugin_action_links( array $links ): array {
-
-	$vida_settings_url = esc_url( get_admin_url( null, 'admin.php?page=wc-admin&path=%2Fvida' ) );
+	$vida_settings_url = esc_url( get_admin_url( null, 'admin.php?page=wc-settings&tab=checkout&section=vida&from=WCADMIN_PAYMENT_SETTINGS' ) );
 	array_unshift( $links, "<a title='Vida Settings Page' href='$vida_settings_url'>Setup</a>" );
 
 	return $links;

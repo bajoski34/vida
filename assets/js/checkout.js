@@ -39,7 +39,6 @@ jQuery( function ( $ ) {
                 clientSecret: client_secret,
                 redirectUri: redirect_uri,
                 environment,
-                target: 'tab'
             },
             "request": {
                 profile: phone_number,
@@ -66,6 +65,8 @@ jQuery( function ( $ ) {
             event.origin !== "https://vida-dashboard-git-ft-agiletech-veendhq-engineering.vercel.app") {
             return;
         }
+
+        console.log("#1 event data: ",event.data);
         
         if (event.data.type === "purchase" && event.data.status === "completed") {
             console.log(event.data);

@@ -115,7 +115,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		add_action( 'woocommerce_receipt_' . $this->id, array( $this, 'receipt_page' ) );
-		add_action( 'woocommerce_api_wc_vida_payment_gateway', array( $this, 'vida_verify_payment' ) );
+		add_action( 'woocommerce_api_vida_wc_payment_gateway', array( $this, 'vida_verify_payment' ) );
 
 		// Webhook listener/API hook.
 		add_action( 'woocommerce_api_vida_payment_webhook', array( $this, 'vida_notification_handler' ) );
@@ -143,16 +143,16 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 		?>
 		
 		<table class="form-table">
-			<!-- <tr valign="top">
+			<tr valign="top">
 				<th scope="row">
-					<label><?php //esc_attr_e( 'Webhook Instruction', 'vidaveend' ); ?></label>
+					<label><?php esc_attr_e( 'Webhook Instruction', 'vidaveend' ); ?></label>
 				</th>
 				<td class="forminp forminp-text">
 					<p class="description">
-						<?php //esc_attr_e( 'Please add this webhook URL and paste on the webhook section on your dashboard', 'vidaveend' ); ?><strong style="color: blue"><pre><code><?php //echo esc_url( WC()->api_request_url( 'Vida_Payment_Webhook' ) ); ?></code></pre></strong><a href="https://merchant.vida.com/merchant/settings" target="_blank">Merchant Account</a>
+						<?php esc_attr_e( 'Please add this webhook URL and paste on the webhook section on your dashboard', 'vidaveend' ); ?><strong style="color: blue"><pre><code><?php echo esc_url( WC()->api_request_url( 'Vida_WC_Payment_Webhook' ) ); ?></code></pre></strong><a href="https://merchant.vida.com/merchant/settings" target="_blank">Merchant Account</a>
 					</p>
 				</td>
-			</tr> -->
+			</tr>
 			<?php
 				$this->generate_settings_html();
 			?>
@@ -332,7 +332,6 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 		);
 
 			$nonce_value = sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) );
-
 			$order_key = urldecode( sanitize_text_field( wp_unslash( $_GET['key'] ) ) );
 			$order_id  = absint( get_query_var( 'order-pay' ) );
 
@@ -388,7 +387,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 			$the_order_key = $order->get_order_key();
 			$currency      = $order->get_currency();
 			$custom_nonce  = wp_create_nonce();
-			$redirect_url  = WC()->api_request_url( 'Vida_Payment_Gateway' ) . '?order_id=' . $order_id . '&_wpnonce=' . $custom_nonce;
+			$redirect_url  = WC()->api_request_url( 'Vida_WC_Payment_Gateway' ) . '?order_id=' . $order_id . '&_wpnonce=' . $custom_nonce;
 
 			if ( $the_order_id === $order_id && $the_order_key === $order_key ) {
 				// $payment_args['email']        = $email;
@@ -444,6 +443,14 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	public function vida_verify_payment() {
 		$logger = $this->logger;
 
+		//TODO: if the link is deformed structure and get the query params. example if multiple ? exists. 
+		$raw_uri = $_SERVER['REQUEST_URI'];
+		$query_string = parse_url($raw_uri, PHP_URL_QUERY); // this works even if multiple '?'
+		$query_params = [];
+		parse_str($query_string, $query_params);
+		// echo json_encode($query_params);
+		// exit(0);
+
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) ) ) {
 			if ( isset( $_GET['order_id'] ) ) {
 				// Handle expired Session.
@@ -463,8 +470,8 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 			}
 		}
 
-		if ( isset( $_POST['tx_ref'] ) || isset( $_GET['tx_ref'] ) ) {
-			$txn_ref  = urldecode( sanitize_text_field( wp_unslash( $_GET['tx_ref'] ) ) ) ?? sanitize_text_field( wp_unslash( $_POST['tx_ref'] ) );
+		if ( isset( $_POST['reference'] ) || isset( $_GET['reference'] ) ) {
+			$txn_ref  = urldecode( sanitize_text_field( wp_unslash( $_GET['reference'] ) ) ) ?? sanitize_text_field( wp_unslash( $_POST['reference'] ) );
 			$o        = explode( '_', sanitize_text_field( $txn_ref ) );
 			$order_id = intval( $o[1] );
 			$order    = wc_get_order( $order_id );
