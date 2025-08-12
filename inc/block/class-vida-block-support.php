@@ -120,8 +120,8 @@ final class Vida_Block_Support extends AbstractPaymentMethodType {
 
 		wp_enqueue_style(
 			'wc-vida-blocks',
-			VIDA_URL. '/assets/css/vida.css',
-			[],
+			VIDA_URL . '/assets/css/vida.css',
+			array(),
 			VIDA_VERSION,
 			false
 		);
@@ -143,14 +143,14 @@ final class Vida_Block_Support extends AbstractPaymentMethodType {
 	 */
 	public function get_payment_method_data(): array {
 		return array(
-			'icons'       => $this->get_icons(),
-			'supports'    => array_filter( $this->get_supported_features(), array( $this->gateway, 'supports' ) ),
-			'isAdmin'     => is_admin(),
-			'client_id'  => ( 'yes' === $this->settings['go_live'] ) ? $this->settings['live_client_id'] : $this->settings['test_client_id'],
-			'client_secret'  => ( 'yes' === $this->settings['go_live'] ) ? $this->settings['live_client_secret'] : $this->settings['test_client_secret'],
-			'asset_url'   => plugins_url( 'assets', VIDA_PLUGIN_FILE ),
-			'title'       => $this->settings['title'],
-			'description' => $this->settings['description'] ?? '',
+			'icons'         => $this->get_icons(),
+			'supports'      => array_filter( $this->get_supported_features(), array( $this->gateway, 'supports' ) ),
+			'isAdmin'       => is_admin(),
+			'client_id'     => ( 'yes' === $this->settings['go_live'] ) ? $this->settings['live_client_id'] : $this->settings['test_client_id'],
+			'client_secret' => ( 'yes' === $this->settings['go_live'] ) ? $this->settings['live_client_secret'] : $this->settings['test_client_secret'],
+			'asset_url'     => plugins_url( 'assets', VIDA_PLUGIN_FILE ),
+			'title'         => $this->settings['title'],
+			'description'   => $this->settings['description'] ?? '',
 		);
 	}
 

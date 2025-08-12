@@ -90,7 +90,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return void
 	 */
 	public function __construct() {
-		$this->base_url           = "https://vida-dev.veendhq.com";
+		$this->base_url           = 'https://vida-dev.veendhq.com';
 		$this->id                 = 'vida';
 		$this->icon               = plugins_url( 'assets/img/vida.png', VIDA_PLUGIN_FILE );
 		$this->has_fields         = false;
@@ -110,7 +110,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 		$this->auto_complete_order = $this->get_option( 'autocomplete_order' );
 		$this->go_live             = $this->get_option( 'go_live' );
 		$this->supports            = array(
-			'products'
+			'products',
 		);
 
 		add_action( 'admin_notices', array( $this, 'admin_notices' ) );
@@ -124,11 +124,11 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 			add_action( 'woocommerce_update_options_payment_gateways_' . $this->id, array( $this, 'process_admin_options' ) );
 		}
 
-		$this->client_id = $this->test_client_id;
+		$this->client_id     = $this->test_client_id;
 		$this->client_secret = $this->test_client_secret;
 
 		if ( 'yes' === $this->go_live ) {
-			$this->client_id = $this->live_client_id;
+			$this->client_id     = $this->live_client_id;
 			$this->client_secret = $this->live_client_secret;
 		}
 
@@ -189,25 +189,25 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 				'description' => __( 'Optional', 'vidaveend' ),
 				'default'     => 'Powered by VeendHQ.',
 			),
-			'test_client_id'    => array(
+			'test_client_id'     => array(
 				'title'       => __( 'Test Client ID', 'vidaveend' ),
 				'type'        => 'text',
 				'description' => __( 'Required! Enter your Vida test client_id here', 'vidaveend' ),
 				'default'     => '',
 			),
-			'test_client_secret'    => array(
+			'test_client_secret' => array(
 				'title'       => __( 'Test Client Secret', 'vidaveend' ),
 				'type'        => 'password',
 				'description' => __( 'Required! Enter your Vida test client secret here', 'vidaveend' ),
 				'default'     => '',
 			),
-			'live_client_id'    => array(
+			'live_client_id'     => array(
 				'title'       => __( 'Live Client Id', 'vidaveend' ),
 				'type'        => 'text',
 				'description' => __( 'Required! Enter your Vida live client id here', 'vidaveend' ),
 				'default'     => '',
 			),
-			'live_client_secret'    => array(
+			'live_client_secret' => array(
 				'title'       => __( 'Live Client Secret', 'vidaveend' ),
 				'type'        => 'password',
 				'description' => __( 'Required! Enter your Vida live client Secret here', 'vidaveend' ),
@@ -243,7 +243,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	public function process_payment( $order_id ) {
 		// For Redirect Checkout.
 		// if ( 'redirect' === $this->payment_style ) {
-		// 	return $this->process_redirect_payments( $order_id );
+		// return $this->process_redirect_payments( $order_id );
 		// }
 
 		// For inline Checkout.
@@ -275,7 +275,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	 * @return array|void
 	 */
 	public function process_redirect_payments( $order_id ) {
-		//TODO: Future implementation a secure version of the current implementation.
+		// TODO: Future implementation a secure version of the current implementation.
 	}
 
 	/**
@@ -332,26 +332,26 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 		);
 
 			$nonce_value = sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) );
-			$order_key = urldecode( sanitize_text_field( wp_unslash( $_GET['key'] ) ) );
-			$order_id  = absint( get_query_var( 'order-pay' ) );
+			$order_key   = urldecode( sanitize_text_field( wp_unslash( $_GET['key'] ) ) );
+			$order_id    = absint( get_query_var( 'order-pay' ) );
 
 			$order = wc_get_order( $order_id );
 
-			$complete_order_items = [];
+			$complete_order_items = array();
 
-			foreach ( $order->get_items() as $item_id => $item ) {
-				$product = $item->get_product(); // WC_Product object
-				$product_name = $item->get_name();
-				$quantity = $item->get_quantity();
-				$total = $item->get_total();
-				$sku = $product ? $product->get_sku() : '';
+		foreach ( $order->get_items() as $item_id => $item ) {
+			$product      = $item->get_product(); // WC_Product object
+			$product_name = $item->get_name();
+			$quantity     = $item->get_quantity();
+			$total        = $item->get_total();
+			$sku          = $product ? $product->get_sku() : '';
 
-				$complete_order_items[] = [
-					'name' => $product_name,
-					'unitPrice' => $total,
-					'quantity' => $quantity
-				];
-			}
+			$complete_order_items[] = array(
+				'name'      => $product_name,
+				'unitPrice' => $total,
+				'quantity'  => $quantity,
+			);
+		}
 
 		if ( empty( $nonce_value ) || ! wp_verify_nonce( $nonce_value ) ) {
 
@@ -367,10 +367,10 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 
 		wp_enqueue_script( 'jquery' );
 
-		$vida_inline_link = 'https://vida-dashboard-git-ft-agiletech-veendhq-engineering.vercel.app/vendor/vida-merchant.js';
+		$vida_inline_link         = 'https://vida-dashboard-git-ft-agiletech-veendhq-engineering.vercel.app/vendor/vida-merchant.js';
 		$checkout_frontend_script = 'assets/js/checkout.js';
 		if ( 'yes' === $this->go_live ) {
-			$vida_inline_link = 'https://app.mycreditprofile.me/vendor/vida-merchant.js';
+			$vida_inline_link         = 'https://app.mycreditprofile.me/vendor/vida-merchant.js';
 			$checkout_frontend_script = 'assets/js/checkout.min.js';
 		}
 
@@ -395,11 +395,11 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 				$payment_args['amount']        = $amount;
 				$payment_args['tx_ref']        = $txnref;
 				$payment_args['currency']      = $currency;
-				$payment_args['client_id']     = $this->go_live === true ? $this->live_client_id: $this->test_client_id;
-				$payment_args['client_secret'] = $this->go_live === true ? $this->live_client_secret: $this->test_client_secret;
+				$payment_args['client_id']     = $this->go_live === 'yes' ? $this->live_client_id : $this->test_client_id;
+				$payment_args['client_secret'] = $this->go_live === 'yes' ? $this->live_client_secret : $this->test_client_secret;
 				$payment_args['redirect_uri']  = $redirect_url;
 				$payment_args['phone_number']  = $order->get_billing_phone();
-				$payment_args['environment']   = $this->go_live === true ? 'production': 'sandbox';
+				$payment_args['environment']   = $this->go_live === 'yes' ? 'production' : 'sandbox';
 				// $payment_args['first_name']   = $order->get_billing_first_name();
 				// $payment_args['last_name']    = $order->get_billing_last_name();
 				// $payment_args['consumer_id']  = $order->get_customer_id();
@@ -443,13 +443,9 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	public function vida_verify_payment() {
 		$logger = $this->logger;
 
-		//TODO: if the link is deformed structure and get the query params. example if multiple ? exists. 
-		$raw_uri = $_SERVER['REQUEST_URI'];
-		$query_string = parse_url($raw_uri, PHP_URL_QUERY); // this works even if multiple '?'
-		$query_params = [];
-		parse_str($query_string, $query_params);
-		// echo json_encode($query_params);
-		// exit(0);
+		if ( 'yes' === $this->go_live ) {
+			$this->base_url = 'https://api.askvida.com';
+		}
 
 		if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ) ) ) {
 			if ( isset( $_GET['order_id'] ) ) {
@@ -485,12 +481,12 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 				$args = array(
 					'method'  => 'GET',
 					'headers' => array(
-						'Content-Type'  => 'application/json'
+						'Content-Type' => 'application/json',
 					),
 				);
 
 				$order->add_order_note( esc_html__( 'verifying the Payment of Vida...', 'vidaveend' ) );
-				$response = wp_safe_remote_request( $this->base_url . '/bnplrequests/'.$txn_ref.'/status', $args );
+				$response = wp_safe_remote_request( $this->base_url . '/bnplrequests/' . $txn_ref . '/status', $args );
 
 				if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
 					$current_response                = \json_decode( $response['body'] );
@@ -661,7 +657,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 	 * Process Webhook notifications.
 	 */
 	public function vida_notification_handler() {
-		$logger     = $this->logger;
+		$logger = $this->logger;
 
 		if ( VIDA_ALLOWED_WEBHOOK_IP_ADDRESS !== $this->vida_get_client_ip() ) {
 			$this->logger->info( 'Faudulent Webhook Notification Attempt [Access Restricted]: ' . (string) $this->vida_get_client_ip() );
@@ -770,7 +766,7 @@ class Vida_Payment_Gateway extends WC_Payment_Gateway {
 
 				if ( ! is_wp_error( $response ) && wp_remote_retrieve_response_code( $response ) === 200 ) {
 					// Request successful.
-					$current_response                  = \json_decode( $response['body'] );
+					$current_response                = \json_decode( $response['body'] );
 					$is_cancelled_or_pending_on_vida = in_array( $current_response->data->status, array( 'cancelled', 'pending' ), true );
 					if ( isset( $_GET['status'] ) && 'cancelled' === $_GET['status'] && $is_cancelled_or_pending_on_vida ) { // phpcs:ignore
 						if ( $order instanceof WC_Order ) {

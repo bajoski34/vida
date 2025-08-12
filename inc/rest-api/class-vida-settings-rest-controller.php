@@ -64,8 +64,8 @@ final class Vida_Settings_Rest_Controller extends WP_REST_Controller {
 	public function vida_update_validations() {
 		return array(
 			array(
-				'client_id'    => true,
-				'client_secret'    => true,
+				'client_id'          => true,
+				'client_secret'      => true,
 				'go_live'            => array(
 					'validate_callback' => function ( $param ) {
 						if ( ! gettype( $param ) === 'yes' && ! gettype( $param ) === 'no' ) {

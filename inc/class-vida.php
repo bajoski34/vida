@@ -71,7 +71,7 @@ class Vida {
 		$this->define( 'VIDA_DIR_PATH', plugin_dir_path( VIDA_PLUGIN_FILE ) );
 		$this->define( 'VIDA_MIN_WC_VER', '6.9.1' );
 		$this->define( 'VIDA_URL', trailingslashit( plugins_url( '/', VIDA_PLUGIN_FILE ) ) );
-		$this->define( 'VIDA_ALLOWED_WEBHOOK_IP_ADDRESS', '99.80.58.253');
+		$this->define( 'VIDA_ALLOWED_WEBHOOK_IP_ADDRESS', '99.80.58.253' );
 		$this->define( 'VIDA_EPSILON', 0.01 );
 	}
 
