@@ -38,7 +38,7 @@ jQuery( function ( $ ) {
                 clientId: client_id,
                 clientSecret: client_secret,
                 redirectUri: redirect_uri,
-                environment,
+                environment: 'tab',
             },
             "request": {
                 profile: phone_number,
