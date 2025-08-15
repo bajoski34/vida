@@ -78,7 +78,8 @@ jobs:
             --dbuser=wpuser \
             --dbpass=wppass \
             --dbhost=127.0.0.1 \
-            --path=wp
+            --path=wp \
+            --allow-root
           wp db create --path=wp
           wp core install \
             --url="http://localhost" \
@@ -86,7 +87,8 @@ jobs:
             --admin_user="admin" \
             --admin_password="password" \
             --admin_email="admin@example.com" \
-            --path=wp
+            --path=wp \
+            --allow-root
 
       - name: Install WooCommerce
         run: |
