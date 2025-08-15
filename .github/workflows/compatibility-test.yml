@@ -77,7 +77,7 @@ jobs:
             --dbname=wordpress \
             --dbuser=wpuser \
             --dbpass=wppass \
-            --dbhost=127.0.0.1 \
+            --dbhost=mysql \
             --path=wp \
             --allow-root
           wp db create --path=wp
