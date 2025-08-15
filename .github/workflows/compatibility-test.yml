@@ -59,9 +59,9 @@ jobs:
 
       - name: Create MySQL user for WordPress
         run: |
-          mysql -u root -proot -e "CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'wppass';"
-          mysql -u root -proot -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';"
-          mysql -u root -proot -e "FLUSH PRIVILEGES;"
+          mysql -h 127.0.0.1 -u root -proot -e "CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'wppass';"
+          mysql -h 127.0.0.1 -u root -proot -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';"
+          mysql -h 127.0.0.1 -u root -proot -e "FLUSH PRIVILEGES;"
 
       - name: Setup PHP tools
         run: |
