@@ -28,15 +28,17 @@ jobs:
           tools: composer, wp-cli
           coverage: none
 
-      - name: Start MySQL
+      - name: Start MySQL and create DB
         run: |
           sudo service mysql start
-          mysql -u root -e "CREATE DATABASE wordpress;"
+          # Set root password for MySQL
+          mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; FLUSH PRIVILEGES;"
+          mysql -u root -proot -e "CREATE DATABASE wordpress;"
 
       - name: Install WordPress
         run: |
           wp core download --version=${{ matrix.wordpress-version }} --path=wp
-          wp config create --dbname=wordpress --dbuser=root --dbpass= --path=wp
+          wp config create --dbname=wordpress --dbuser=root --dbpass=root --dbhost=127.0.0.1 --path=wp
           wp db create --path=wp
           wp core install \
             --url="http://localhost" \
@@ -70,9 +72,13 @@ jobs:
           echo "Bumping WP tested up to: $WP_VER"
           echo "Bumping WC tested up to: $WC_VER"
 
+          # Update readme.txt
           sed -i "s/^Tested up to:.*/Tested up to: $WP_VER/" readme.txt
+
+          # Update vida.php header
           sed -i "s/^\(\s*\*\s*WC tested up to:\s*\).*/\1$WC_VER/" vida.php
 
+          # Commit and push changes
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add readme.txt vida.php
