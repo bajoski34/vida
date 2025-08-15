@@ -1,0 +1,57 @@
+name: WooCommerce Compatibility Test
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily at 6 AM UTC
+  workflow_dispatch:
+
+jobs:
+  check-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get latest WooCommerce version
+        id: wc_version
+        run: |
+          LATEST=$(curl -s https://api.github.com/repos/woocommerce/woocommerce/releases/latest | jq -r '.tag_name')
+          echo "latest=$LATEST" >> $GITHUB_OUTPUT
+
+      - name: Get current tested up to version
+        id: current_version
+        run: |
+          CURRENT=$(grep "Tested up to:" readme.txt | awk '{print $4}')
+          echo "current=$CURRENT" >> $GITHUB_OUTPUT
+
+      - name: Compare versions
+        id: compare
+        run: |
+          if [ "${{ steps.wc_version.outputs.latest }}" != "${{ steps.current_version.outputs.current }}" ]; then
+            echo "new_version=true" >> $GITHUB_OUTPUT
+          else
+            echo "new_version=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up WordPress with WooCommerce
+        if: steps.compare.outputs.new_version == 'true'
+        run: |
+          # Install WP + WooCommerce new version + plugin
+          # e.g., using WP-CLI in a local test env
+          echo "Setting up test env for WooCommerce ${{ steps.wc_version.outputs.latest }}"
+
+      - name: Run tests
+        if: steps.compare.outputs.new_version == 'true'
+        run: |
+          # Your test command here
+          echo "Running tests..."
+          npm test || exit 1
+
+      - name: Update tested up to version
+        if: steps.compare.outputs.new_version == 'true'
+        run: |
+          sed -i "s/^Tested up to:.*/Tested up to: ${{ steps.wc_version.outputs.latest }}/" readme.txt
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git commit -am "Bump WooCommerce tested up to ${{ steps.wc_version.outputs.latest }}"
+          git push

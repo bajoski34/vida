@@ -1,0 +1,80 @@
+name: WP & WC Compatibility Test & Auto-Bump
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # Daily at 6 AM UTC
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        wordpress-version: [6.4, 6.5, latest]
+        woocommerce-version: [8.8.2, latest] # Example WC versions
+        php-version: [7.4, 8.0, 8.1]
+    name: WP ${{ matrix.wordpress-version }} / WC ${{ matrix.woocommerce-version }} / PHP ${{ matrix.php-version }}
+
+    steps:
+      - name: Checkout plugin
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer, wp-cli
+          coverage: none
+
+      - name: Start MySQL
+        run: |
+          sudo service mysql start
+          mysql -u root -e "CREATE DATABASE wordpress;"
+
+      - name: Install WordPress
+        run: |
+          wp core download --version=${{ matrix.wordpress-version }} --path=wp
+          wp config create --dbname=wordpress --dbuser=root --dbpass= --path=wp
+          wp db create --path=wp
+          wp core install \
+            --url="http://localhost" \
+            --title="Test Site" \
+            --admin_user="admin" \
+            --admin_password="password" \
+            --admin_email="admin@example.com" \
+            --path=wp
+
+      - name: Install WooCommerce
+        run: |
+          wp plugin install woocommerce --version=${{ matrix.woocommerce-version }} --activate --path=wp
+
+      - name: Install Plugin
+        run: |
+          mkdir -p wp/wp-content/plugins/vida
+          cp -R ./* wp/wp-content/plugins/vida
+          wp plugin activate vida --path=wp
+
+      - name: Run PHPUnit tests
+        run: |
+          composer install
+          vendor/bin/phpunit
+
+      - name: Bump versions in files
+        if: matrix.wordpress-version == 'latest' && matrix.woocommerce-version == 'latest' && matrix.php-version == '8.1'
+        run: |
+          WP_VER=$(wp core version --path=wp)
+          WC_VER=$(wp plugin get woocommerce --field=version --path=wp)
+
+          echo "Bumping WP tested up to: $WP_VER"
+          echo "Bumping WC tested up to: $WC_VER"
+
+          sed -i "s/^Tested up to:.*/Tested up to: $WP_VER/" readme.txt
+          sed -i "s/^\(\s*\*\s*WC tested up to:\s*\).*/\1$WC_VER/" vida.php
+
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add readme.txt vida.php
+          git commit -m "Bump Tested up to (WP $WP_VER) and WC tested up to ($WC_VER)"
+          git push origin HEAD:${GITHUB_REF}

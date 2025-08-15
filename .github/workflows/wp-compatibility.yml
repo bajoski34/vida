@@ -1,0 +1,55 @@
+name: WordPress Compatibility Test
+
+on:
+  schedule:
+    - cron: "0 6 * * *" # Daily at 6 AM UTC
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        wordpress-version: [6.4, 6.5, latest] # Add/remove versions as needed
+        php-version: [7.4, 8.0, 8.1]
+    name: WP ${{ matrix.wordpress-version }} / PHP ${{ matrix.php-version }}
+
+    steps:
+      - name: Checkout plugin
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          tools: composer, wp-cli
+          coverage: none
+
+      - name: Start MySQL
+        run: |
+          sudo service mysql start
+          mysql -u root -e "CREATE DATABASE wordpress;"
+
+      - name: Install WordPress
+        run: |
+          wp core download --version=${{ matrix.wordpress-version }} --path=wp
+          wp config create --dbname=wordpress --dbuser=root --dbpass= --path=wp
+          wp db create --path=wp
+          wp core install \
+            --url="http://localhost" \
+            --title="Test Site" \
+            --admin_user="admin" \
+            --admin_password="password" \
+            --admin_email="admin@example.com" \
+            --path=wp
+
+      - name: Install Plugin
+        run: |
+          mkdir -p wp/wp-content/plugins/your-plugin
+          cp -R ./* wp/wp-content/plugins/your-plugin
+          wp plugin activate your-plugin --path=wp
+
+      - name: Run PHPUnit tests
+        run: |
+          composer install
+          vendor/bin/phpunit
