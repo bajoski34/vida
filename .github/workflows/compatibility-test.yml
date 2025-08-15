@@ -8,6 +8,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: wordpress
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     strategy:
       matrix:
         wordpress-version: [6.4, 6.5, latest]
@@ -28,20 +42,23 @@ jobs:
           tools: composer, wp-cli
           coverage: none
 
-      - name: Start MySQL and create DB
+      - name: Wait for MySQL
         run: |
-          sudo service mysql start
-          
-          # Set root password for MySQL
-          mysql -u root -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root'; FLUSH PRIVILEGES;"
-          
-          # Create the database using password
-          mysql -u root -proot -e "CREATE DATABASE wordpress;"
+          for i in {1..10}; do
+            mysqladmin ping -h 127.0.0.1 -uroot -proot && break
+            echo "Waiting for MySQL..."
+            sleep 3
+          done
 
       - name: Install WordPress
         run: |
           wp core download --version=${{ matrix.wordpress-version }} --path=wp
-          wp config create --dbname=wordpress --dbuser=root --dbpass=root --dbhost=127.0.0.1 --path=wp
+          wp config create \
+            --dbname=wordpress \
+            --dbuser=root \
+            --dbpass=root \
+            --dbhost=127.0.0.1 \
+            --path=wp
           wp db create --path=wp
           wp core install \
             --url="http://localhost" \
