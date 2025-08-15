@@ -71,6 +71,8 @@ jobs:
           mv wp-cli.phar /usr/local/bin/wp
 
       - name: Install WordPress
+        env:
+          PHP_MEMORY_LIMIT: 512M
         run: |
           wp core download --version=${{ matrix.wordpress-version }} --path=wp --allow-root
           wp config create \
