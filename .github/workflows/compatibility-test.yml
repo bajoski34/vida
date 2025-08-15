@@ -85,6 +85,7 @@ jobs:
             --dbhost=mysql \
             --path=wp \
             --allow-root
+          echo "define('WP_CLI_DB_ARGS', array('--ssl=0', '--no-defaults'));" >> wp/wp-config.php
           wp db create --path=wp --allow-root
           wp core install \
             --url="http://localhost" \
