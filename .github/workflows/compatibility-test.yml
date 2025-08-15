@@ -70,6 +70,9 @@ jobs:
           chmod +x wp-cli.phar
           mv wp-cli.phar /usr/local/bin/wp
 
+      - name: Increase PHP memory limit
+        run: echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/memory-limit.ini
+
       - name: Install WordPress
         env:
           PHP_MEMORY_LIMIT: 512M
@@ -82,7 +85,7 @@ jobs:
             --dbhost=mysql \
             --path=wp \
             --allow-root
-          wp db create --path=wp
+          wp db create --path=wp --allow-root
           wp core install \
             --url="http://localhost" \
             --title="Test Site" \
