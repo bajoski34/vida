@@ -52,16 +52,16 @@ jobs:
       - name: Wait for MySQL
         run: |
           for i in {1..10}; do
-            mysqladmin ping --ssl-mode=DISABLED -h mysql -uroot -proot && break
+            mysqladmin ping --ssl=0 -h mysql -uroot -proot && break
             echo "Waiting for MySQL..."
             sleep 3
           done
 
       - name: Create MySQL user for WordPress
         run: |
-          mysql --ssl-mode=DISABLED -h mysql -u root -proot -e "CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'wppass';"
-          mysql --ssl-mode=DISABLED -h mysql -u root -proot -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';"
-          mysql --ssl-mode=DISABLED -h mysql -u root -proot -e "FLUSH PRIVILEGES;"
+          mysql --ssl=0 -h mysql -u root -proot -e "CREATE USER IF NOT EXISTS 'wpuser'@'%' IDENTIFIED BY 'wppass';"
+          mysql --ssl=0 -h mysql -u root -proot -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'%';"
+          mysql --ssl=0 -h mysql -u root -proot -e "FLUSH PRIVILEGES;"
 
       - name: Setup PHP tools
         run: |
