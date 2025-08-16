@@ -90,7 +90,7 @@ jobs:
             --path=wp \
             --allow-root
 
-          sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=\/__w\/vida\/vida\/my.cnf', '--ssl=0', '--ssl-mode=DISABLED', '--no-defaults'));" wp/wp-config.php
+          sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=\/__w\/vida\/vida\/my.cnf', '--skip-ssl', '--ssl-mode=DISABLED', '--no-defaults'));" wp/wp-config.php
 
           cat /__w/vida/vida/my.cnf
           cat wp/wp-config.php
