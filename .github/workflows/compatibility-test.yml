@@ -88,7 +88,8 @@ jobs:
             --dbpass=wppass \
             --dbhost=mysql \
             --path=wp \
-            --allow-root
+            --allow-root \
+            --skip-ssl
 
           sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=\/__w\/vida\/vida\/my.cnf', '--ssl=0', '--ssl-mode=DISABLED', '--no-defaults'));" wp/wp-config.php
 
@@ -97,7 +98,7 @@ jobs:
           export MYSQL_SSL_DISABLED=1
           export MYSQL_OPT_SSL_ENFORCE=0
           export MYSQL_CLIENT_SSL_DISABLED=1
-          wp db create --path=wp --allow-root
+          wp db create --path=wp --allow-root --skip-ssl
           wp core install \
             --url="http://localhost" \
             --title="Test Site" \
@@ -105,7 +106,8 @@ jobs:
             --admin_password="password" \
             --admin_email="admin@example.com" \
             --path=wp \
-            --allow-root
+            --allow-root \
+            --skip-ssl
 
       - name: Install WooCommerce
         run: |
