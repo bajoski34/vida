@@ -24,6 +24,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: wordpress
+          MYSQL_SSL: 0
         ports:
           - 3306:3306
         options: >-
@@ -91,6 +92,7 @@ jobs:
             --allow-root
 
           sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=\/__w\/vida\/vida\/my.cnf', '--ssl=0', '--ssl-mode=DISABLED', '--no-defaults'));" wp/wp-config.php
+          sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('MYSQL_CLIENT_FLAGS', MYSQLI_CLIENT_SSL_DONT_VERIFY_SERVER_CERT);" wp/wp-config.php
 
           cat /__w/vida/vida/my.cnf
           cat wp/wp-config.php
