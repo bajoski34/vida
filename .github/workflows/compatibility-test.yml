@@ -77,6 +77,7 @@ jobs:
         env:
           PHP_MEMORY_LIMIT: 512M
         run: |
+          echo -e "[client]\nssl-mode=DISABLED\n" > my.cnf
           wp core download --version=${{ matrix.wordpress-version }} --path=wp --allow-root
           wp config create \
             --dbname=wordpress \
@@ -85,7 +86,7 @@ jobs:
             --dbhost=mysql \
             --path=wp \
             --allow-root
-          sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--ssl=0', '--ssl-mode=DISABLED', '--no-defaults'));" wp/wp-config.php
+          sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=$(pwd)/my.cnf'));" wp/wp-config.php
           cat wp/wp-config.php
           wp db create --path=wp --allow-root
           wp core install \
