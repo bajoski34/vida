@@ -79,7 +79,7 @@ jobs:
           MYSQL_SSL_DISABLED: 1
           MYSQL_OPT_SSL_ENFORCE: 0
         run: |
-          echo -e "[client]\nssl=0\n" > /__w/vida/vida/my.cnf
+          echo -e "[client]\nssl=0\nssl-mode=DISABLED\n" > /__w/vida/vida/my.cnf
           chmod 644 /__w/vida/vida/my.cnf
           wp core download --version=${{ matrix.wordpress-version }} --path=wp --allow-root
           wp config create \
@@ -97,6 +97,7 @@ jobs:
 
           export MYSQL_SSL_DISABLED=1
           export MYSQL_OPT_SSL_ENFORCE=0
+          export MYSQL_CLIENT_SSL_DISABLED=1
           cat wp/wp-config.php
           wp db create --path=wp --allow-root
           wp core install \
@@ -125,7 +126,7 @@ jobs:
         run: vendor/bin/phpunit
 
       - name: Bump versions in files
-        if: ${{ matrix.wordpress-version == 'latest' && matrix.woocommerce-version == 'latest' && matrix.php-version == '8.1' }}
+        if: github.ref == 'refs/heads/main' && ${{ matrix.wordpress-version == 'latest' && matrix.woocommerce-version == 'latest' && matrix.php-version == '8.1' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
