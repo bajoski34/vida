@@ -36,7 +36,7 @@ jobs:
       matrix:
         wordpress-version: [6.4, 6.5, latest]
         woocommerce-version: [8.8.2, latest]
-        php-version: [7.4, 8.0, 8.1]
+        php-version: [8.3, 8.4]
 
     name: WP ${{ matrix.wordpress-version }} / WC ${{ matrix.woocommerce-version }} / PHP ${{ matrix.php-version }}
 
