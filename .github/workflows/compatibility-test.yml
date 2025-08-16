@@ -26,11 +26,6 @@ jobs:
           MYSQL_DATABASE: wordpress
         ports:
           - 3306:3306
-        command: [
-          "mysqld",
-          "--skip-ssl",
-          "--skip-secure-auth"
-        ]
         options: >-
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
