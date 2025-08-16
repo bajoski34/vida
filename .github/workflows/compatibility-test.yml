@@ -27,9 +27,6 @@ jobs:
         ports:
           - 3306:3306
         options: >-
-          --ssl-ca=/etc/mysql/certs/ca.pem
-          --ssl-cert=/etc/mysql/certs/server-cert.pem
-          --ssl-key=/etc/mysql/certs/server-key.pem
           --default-authentication-plugin=mysql_native_password
           --health-cmd="mysqladmin ping --silent"
           --health-interval=10s
@@ -37,6 +34,7 @@ jobs:
           --health-retries=3
         volumes:
           - /__w/vida/vida/mysql-certs:/etc/mysql/certs
+          - /__w/vida/vida/mysql-conf.d:/etc/mysql/conf.d
 
     strategy:
       matrix:
@@ -75,6 +73,17 @@ jobs:
           openssl x509 -req -in client-req.pem -days 3650 -CA ca.pem -CAkey ca-key.pem -set_serial 01 > client-cert.pem
 
           chmod 644 *.pem
+
+      - name: Configure MySQL server SSL
+        run: |
+          mkdir -p /__w/vida/vida/mysql-conf.d
+          cat > /__w/vida/vida/mysql-conf.d/ssl.cnf <<EOF
+          [mysqld]
+          ssl-ca=/etc/mysql/certs/ca.pem
+          ssl-cert=/etc/mysql/certs/server-cert.pem
+          ssl-key=/etc/mysql/certs/server-key.pem
+          require_secure_transport=ON
+          EOF
 
       - name: Wait for MySQL
         run: |
