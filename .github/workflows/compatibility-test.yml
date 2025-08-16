@@ -97,7 +97,7 @@ jobs:
           export MYSQL_SSL_DISABLED=1
           export MYSQL_OPT_SSL_ENFORCE=0
           export MYSQL_CLIENT_SSL_DISABLED=1
-          wp db create --path=wp --allow-root --skip-ssl
+          wp db create --path=wp --allow-root
           wp core install \
             --url="http://localhost" \
             --title="Test Site" \
