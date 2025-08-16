@@ -76,8 +76,11 @@ jobs:
       - name: Install WordPress
         env:
           PHP_MEMORY_LIMIT: 512M
+          MYSQL_SSL_DISABLED: 1
+          MYSQL_OPT_SSL_ENFORCE: 0
         run: |
-          echo -e "[client]\nssl-mode=DISABLED\n" > my.cnf
+          echo -e "[client]\nssl=0\n" > /__w/vida/vida/my.cnf
+          chmod 644 /__w/vida/vida/my.cnf
           wp core download --version=${{ matrix.wordpress-version }} --path=wp --allow-root
           wp config create \
             --dbname=wordpress \
@@ -86,7 +89,14 @@ jobs:
             --dbhost=mysql \
             --path=wp \
             --allow-root
-          sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=$(pwd)/my.cnf'));" wp/wp-config.php
+
+          sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=\/__w\/vida\/vida\/my.cnf', '--ssl=0', '--ssl-mode=DISABLED', '--no-defaults'));" wp/wp-config.php
+
+          cat /__w/vida/vida/my.cnf
+          cat wp/wp-config.php
+
+          export MYSQL_SSL_DISABLED=1
+          export MYSQL_OPT_SSL_ENFORCE=0
           cat wp/wp-config.php
           wp db create --path=wp --allow-root
           wp core install \
