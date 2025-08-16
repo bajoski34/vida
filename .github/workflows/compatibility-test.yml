@@ -105,8 +105,7 @@ jobs:
             --admin_password="password" \
             --admin_email="admin@example.com" \
             --path=wp \
-            --allow-root \
-            --skip-ssl
+            --allow-root
 
       - name: Install WooCommerce
         run: |
