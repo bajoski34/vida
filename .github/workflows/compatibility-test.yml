@@ -129,8 +129,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          WP_VER=$(wp core version --path=wp)
-          WC_VER=$(wp plugin get woocommerce --field=version --path=wp)
+          WP_VER=$(wp core version --path=wp --allow-root)
+          WC_VER=$(wp plugin get woocommerce --field=version --path=wp --allow-root)
 
           echo "Bumping WP tested up to: $WP_VER"
           echo "Bumping WC tested up to: $WC_VER"
