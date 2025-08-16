@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: wordpress:php8.3fpm
+      image: wordpress:php8.2fpm
       env:
         WORDPRESS_DB_HOST: 127.0.0.1
         WORDPRESS_DB_USER: wpuser
