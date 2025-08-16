@@ -73,49 +73,49 @@ jobs:
       - name: Increase PHP memory limit
         run: echo "memory_limit = 512M" > /usr/local/etc/php/conf.d/memory-limit.ini
 
-      # - name: Install WordPress
-      #   env:
-      #     PHP_MEMORY_LIMIT: 512M
-      #     MYSQL_SSL_DISABLED: 1
-      #     MYSQL_OPT_SSL_ENFORCE: 0
-      #   run: |
-      #     echo -e "[client]\nssl=0\nssl-mode=DISABLED\n" > /__w/vida/vida/my.cnf
-      #     chmod 644 /__w/vida/vida/my.cnf
-      #     wp core download --version=${{ matrix.wordpress-version }} --path=wp --allow-root
-      #     wp config create \
-      #       --dbname=wordpress \
-      #       --dbuser=wpuser \
-      #       --dbpass=wppass \
-      #       --dbhost=mysql \
-      #       --path=wp \
-      #       --allow-root
+      - name: Install WordPress
+        env:
+          PHP_MEMORY_LIMIT: 512M
+          MYSQL_SSL_DISABLED: 1
+          MYSQL_OPT_SSL_ENFORCE: 0
+        run: |
+          echo -e "[client]\nssl=0\nssl-mode=DISABLED\n" > /__w/vida/vida/my.cnf
+          chmod 644 /__w/vida/vida/my.cnf
+          wp core download --version=${{ matrix.wordpress-version }} --path=wp --allow-root
+          wp config create \
+            --dbname=wordpress \
+            --dbuser=wpuser \
+            --dbpass=wppass \
+            --dbhost=mysql \
+            --path=wp \
+            --allow-root
 
-      #     sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=\/__w\/vida\/vida\/my.cnf', '--ssl=0', '--ssl-mode=DISABLED', '--no-defaults'));" wp/wp-config.php
+          sed -i "/require_once ABSPATH . 'wp-settings.php';/i define('WP_CLI_DB_ARGS', array('--defaults-extra-file=\/__w\/vida\/vida\/my.cnf', '--ssl=0', '--ssl-mode=DISABLED', '--no-defaults'));" wp/wp-config.php
 
-      #     cat /__w/vida/vida/my.cnf
-      #     cat wp/wp-config.php
-      #     export MYSQL_SSL_DISABLED=1
-      #     export MYSQL_OPT_SSL_ENFORCE=0
-      #     export MYSQL_CLIENT_SSL_DISABLED=1
-      #     wp db create --path=wp --allow-root
-      #     wp core install \
-      #       --url="http://localhost" \
-      #       --title="Test Site" \
-      #       --admin_user="admin" \
-      #       --admin_password="password" \
-      #       --admin_email="admin@example.com" \
-      #       --path=wp \
-      #       --allow-root
+          cat /__w/vida/vida/my.cnf
+          cat wp/wp-config.php
+          export MYSQL_SSL_DISABLED=1
+          export MYSQL_OPT_SSL_ENFORCE=0
+          export MYSQL_CLIENT_SSL_DISABLED=1
+          wp db create --path=wp --allow-root
+          wp core install \
+            --url="http://localhost" \
+            --title="Test Site" \
+            --admin_user="admin" \
+            --admin_password="password" \
+            --admin_email="admin@example.com" \
+            --path=wp \
+            --allow-root
 
-      # - name: Install WooCommerce
-      #   run: |
-      #     wp plugin install woocommerce --version=${{ matrix.woocommerce-version }} --activate --path=wp
+      - name: Install WooCommerce
+        run: |
+          wp plugin install woocommerce --version=${{ matrix.woocommerce-version }} --activate --path=wp
 
-      # - name: Install Plugin
-      #   run: |
-      #     mkdir -p wp/wp-content/plugins/vida
-      #     rsync -av --exclude='.git*' --exclude='wp' --exclude='.github' ./ wp/wp-content/plugins/vida/
-      #     wp plugin activate vida --path=wp
+      - name: Install Plugin
+        run: |
+          mkdir -p wp/wp-content/plugins/vida
+          rsync -av --exclude='.git*' --exclude='wp' --exclude='.github' ./ wp/wp-content/plugins/vida/
+          wp plugin activate vida --path=wp
 
       - name: Install Composer dependencies
         run: composer install
