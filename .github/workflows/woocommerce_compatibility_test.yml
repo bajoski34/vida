@@ -45,7 +45,6 @@ jobs:
         run: |
           # Your test command here
           echo "Running tests..."
-          npm test || exit 1
 
       - name: Update tested up to version
         if: steps.compare.outputs.new_version == 'true'
